@@ -1,0 +1,14 @@
+Imagine being in a supermarket and being about to queue to pay.
+There are c cashiers (imagine c = 10) to choose from
+there's a 'feeder' structure from which 
+each person chooses which cashier queue to join. 
+Just like any queue; enter in back, serve in front
+cashier queue allow additional skip
+(allow skip to another queue to end if too slow)
+Using threads, run a simulation 
+write stats to screen/file for later analysis
+to see what happens as you adjust any preferences in the skip method
+randomize cashier speed
+You will want to create a GUI in order to make your simulation easier to visualize
+experiment with various strategies
+(join fastest queue, join shortest queue)
