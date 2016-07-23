@@ -1,22 +1,11 @@
 package god;
 
-//public class Node {
-
-
 class Node {
 	
-	//private Vehicle vehicle;
 	private Person person;
 	private Node next;
 	private Node previous;
 	
-
-//	public void setVehicle(Vehicle v) {
-//		vehicle = v;
-//		next = null;
-//		previous = null;
-//	}
-
 	public Node (Person newPerson) {
 		person = newPerson;
 		next = null;
