@@ -7,12 +7,17 @@ import java.awt.event.ActionListener;
 
 public class Main implements ActionListener {
 	
-	private static int k;
-	Cashier cashier1 = new Cashier();
-	Cashier cashier2 = new Cashier();
-	Cashier cashier3 = new Cashier();
+	//private static int k;
+	static Cashier cashier1;
+	static Cashier cashier2;
+	static Cashier cashier3;
 
 	public static void main(String s[]) {
+		
+		//private static int k;
+		cashier1 = new Cashier(1);
+		cashier2 = new Cashier(2);
+		cashier3 = new Cashier(3);
 		
 		//k = 0;
 
@@ -48,6 +53,23 @@ public class Main implements ActionListener {
 
 	}
 	
+	public Cashier chooseCashier(Cashier[] cashiers)
+	{
+		//boolean length = Math.random() < 0.5? true: false;
+		Cashier bestCashier = cashiers[0];
+		double bestSoFar = 999999;
+		for(Cashier c : cashiers)
+		{
+			double temp = c.getLength() * c.getSpeed() + .5;
+			if(temp < bestSoFar)
+			{
+				bestCashier = c;
+				bestSoFar = temp;
+			}
+		}
+		return bestCashier;
+	}
+	
 	 @Override
 	 public void actionPerformed(ActionEvent e) {
 	        String command = e.getActionCommand();
@@ -58,7 +80,6 @@ public class Main implements ActionListener {
 	    }
 
 	    public void myMethod() {
-	        k++;
 	        cashier1.run();
 	        cashier2.run();
 	        cashier3.run();

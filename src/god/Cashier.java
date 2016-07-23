@@ -1,32 +1,85 @@
 package god;
 
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.awt.FlowLayout;
+import java.io.*;
+import javax.swing.*;
 
-
-class Cashier extends Thread {
+class Cashier extends Thread implements Runnable{
 	
 	//private Person [] store;
     private int length;
     private static Node front;
 	private Node back;
     public static String[] toSort;
+    private double speed;
+    private int cashierNum;
+ 
     
     public String[] getArray() {
     	return toSort;
     }
 
 	//private MyQueue ordered = new MyQueue();
+
+    public double getSpeed(){
+    	return speed;
+    }
+
+    public Node servePerson()
+    {
+    	Node firstPerson  = front;
+    	Node secondPerson = firstPerson.getNext();
+    	front = secondPerson;
+    	return firstPerson;
+    }
  
-    public void run(){
-    	
+    
+    //runnable example:
+    //http://www.java2novice.com/java_thread_examples/implementing_runnable/
+    public void run() {
+    	while(true){
+    		if(front != null){
+    	    	Node n = servePerson();
+    	    	Person p = n.getPerson();
+    	    	try {
+    	    		double sleeptime = (double)p.getNumItems() * speed;
+    	    		System.out.println("Cashier #:" + cashierNum + " is sleeping for " + sleeptime);
+    	    		Thread.sleep((long) (sleeptime));
+					System.out.println(cashierNum + ": happened");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+    		}
+    	}
     }
     
-    public Cashier(){
+    public Cashier(int n){
+    	
+    	System.out.println("Cashier #" + n + " is created!");
     	
     	length = 0;
     	front = null;
     	back = null;
+    	speed = 1000 * Math.random() + 500;
+    	cashierNum = n;
+    	
+    	JFrame frame = new JFrame("Cashier");
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+
+		JLabel label = new JLabel("Cashier #" + n);
+
+		panel.add(label);
+		frame.add(panel);
+		frame.setSize(200, 500);
+		frame.setLocation(n * 300 - 200, 350);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		
     }
     
     public int getLength(){
