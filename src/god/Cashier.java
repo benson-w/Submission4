@@ -4,7 +4,7 @@ import java.awt.FlowLayout;
 import java.io.*;
 import javax.swing.*;
 
-class Cashier extends Thread implements Runnable{
+class Cashier/* extends Thread implements Runnable*/{
 	
 	//private Person [] store;
     private int length;
@@ -13,7 +13,6 @@ class Cashier extends Thread implements Runnable{
     public static String[] toSort;
     private double speed;
     private int cashierNum;
- 
     
     public String[] getArray() {
     	return toSort;
@@ -36,8 +35,50 @@ class Cashier extends Thread implements Runnable{
     
     //runnable example:
     //http://www.java2novice.com/java_thread_examples/implementing_runnable/
+    
+    public void createCashierRunner(){
+    	new cashierRunner();
+    }
+    
+    public class cashierRunner implements Runnable {
+
+        public Thread t;
+    	
+    	cashierRunner(){
+    		System.out.println("thread is created: " + t);
+    		t = new Thread(this, "thread #" + cashierNum);
+    		System.out.println("thread: " + t);
+    		t.start();
+    	}
+
+		@Override
+		public void run() {
+			while(true){
+	    		System.out.println("This loop is hit, " + cashierNum);
+	    		if(front != null){
+	    	    	Node n = servePerson();
+	    	    	Person p = n.getPerson();
+	    	    	try {
+	    	    		double sleeptime = (double)p.getNumItems() * speed;
+	    	    		System.out.println("Cashier #:" + cashierNum + " is sleeping for " + sleeptime);
+	    	    		Thread.sleep((long) (sleeptime));
+						System.out.println(cashierNum + ": happened");
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+	    		}
+	    	}
+			
+		}
+    	
+    }
+/*
     public void run() {
     	while(true){
+    		System.out.println("This loop is hit, " + cashierNum);
     		if(front != null){
     	    	Node n = servePerson();
     	    	Person p = n.getPerson();
@@ -55,7 +96,7 @@ class Cashier extends Thread implements Runnable{
     		}
     	}
     }
-    
+    */
     public Cashier(int n){
     	
     	System.out.println("Cashier #" + n + " is created!");
@@ -89,25 +130,6 @@ class Cashier extends Thread implements Runnable{
     public boolean isEmpty(){
         return this.length == 0;
     }
-    
-//    static void add(String a, String b, int c){
-//    
-//    	
-//    	for (Iterator i = new Iterator(front); i.getCurrent().getNext() != null; i.plusPlus()) {
-//
-//    		Person person = new Person(a, b, c);
-//    		Node nodea = new Node(person);
-//    		
-//           if (i.getCurrent().getNext().getNext() == null) {
-//        	   i.getCurrent().getNext().setNext(nodea);
-//        	   return;
-//           }
-//
-//    	}
-    	
-    	
-    	//length++;
-   // }
     
     public void checkInfo(String j){
     	
@@ -170,7 +192,6 @@ class Cashier extends Thread implements Runnable{
         
 
   }
-    
     
     //add p to Queue
     public void joinQueue(Person p) {
