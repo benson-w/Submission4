@@ -3,9 +3,7 @@ package god;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class Main implements ActionListener {
 	static Cashier cashier3;
 	
 	//create an array of Cashiers to iterate
-	ArrayList<Cashier> cashierlist = new ArrayList<Cashier>();
+	//ArrayList<Cashier> cashierlist = new ArrayList<Cashier>();
 	
 	JButton create= new JButton("Create");
 	JButton writeFile = new JButton("WriteFile");
@@ -33,9 +31,9 @@ public class Main implements ActionListener {
 		cashier3 = new Cashier(3);
 		
 		//use cashierlist when we have variable number of cashiers
-		cashierlist.add(cashier1);
-		cashierlist.add(cashier2);
-		cashierlist.add(cashier3);
+//		cashierlist.add(cashier1);
+//		cashierlist.add(cashier2);
+//		cashierlist.add(cashier3);
 	
 		JFrame frame = new JFrame("Homework 4");
 		frame.setLayout(new FlowLayout());
@@ -166,12 +164,16 @@ public class Main implements ActionListener {
 		
 		try {
 			FileOutputStream output = new FileOutputStream(file);
+			//@SuppressWarnings("resource") // not sure what this does but it eliminates the warning
 			PrintWriter pw = new PrintWriter(output, true);
 			
 			//write some stats
 			pw.println("cashier 1 serves at speed of " + cashier1.getSpeed());
 			pw.println("cashier 2 serves at speed of " + cashier2.getSpeed());
 			pw.println("cashier 3 serves at speed of " + cashier3.getSpeed());
+			
+			//some other stats to include: # of customers served
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
