@@ -3,15 +3,23 @@ package god;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class Main implements ActionListener {
+public class Main implements ActionListener {	
 	
 	//private static int k;
 	static Cashier cashier1;
 	static Cashier cashier2;
 	static Cashier cashier3;
+	
+	//create an array of Cashiers to iterate
+	ArrayList<Cashier> cashierlist = new ArrayList<Cashier>();
 	
 	JButton create= new JButton("Create");
 	JButton writeFile = new JButton("WriteFile");
@@ -23,6 +31,11 @@ public class Main implements ActionListener {
 		cashier1 = new Cashier(1);
 		cashier2 = new Cashier(2);
 		cashier3 = new Cashier(3);
+		
+		//use cashierlist when we have variable number of cashiers
+		cashierlist.add(cashier1);
+		cashierlist.add(cashier2);
+		cashierlist.add(cashier3);
 	
 		JFrame frame = new JFrame("Homework 4");
 		frame.setLayout(new FlowLayout());
@@ -136,14 +149,37 @@ public class Main implements ActionListener {
 	        cashier3.createCashierRunner();
 	        createMakePeople();
 			
+		} else if (ac.equals("WriteFile")) {
+			writeFile();
+			
+		} else if (ac.equals("Create")) {
+			//create a new cashier
+			
 		}
-		// TODO Auto-generated method stub
+		
+	}
+	
+	//TODO finish writestats
+	public void writeFile(){
+		
+		String file = "result.txt";	
+		
+		try {
+			FileOutputStream output = new FileOutputStream(file);
+			PrintWriter pw = new PrintWriter(output, true);
+			
+			//write some stats
+			pw.println("cashier 1 serves at speed of " + cashier1.getSpeed());
+			pw.println("cashier 2 serves at speed of " + cashier2.getSpeed());
+			pw.println("cashier 3 serves at speed of " + cashier3.getSpeed());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
 	public static void main(String args[]) {
-		
 		new Main();
-
 	}
 }

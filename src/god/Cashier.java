@@ -65,7 +65,7 @@ class Cashier/* extends Thread implements Runnable*/{
 	    	    	Person p = n.getPerson();
 	    	    	try {
 	    	    		double sleeptime = (double)p.getNumItems() * speed;
-	    	    		System.out.println("Cashier #:" + cashierNum + " is sleeping for " + sleeptime);
+	    	    		System.out.println("Cashier #:" + cashierNum + " is sleeping for " + sleeptime + ", serving " + p.getName());
 	    	    		Thread.sleep((long) (sleeptime));
 						System.out.println(cashierNum + ": happened");
 					} catch (InterruptedException e) {
